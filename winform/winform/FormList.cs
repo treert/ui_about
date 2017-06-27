@@ -26,5 +26,25 @@ namespace winform
         {
             listBox2.Items.Add(listBox1.SelectedItem);
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormList_Load(object sender, EventArgs e)
+        {
+            comboBox1.SelectedIndex = 1;
+        }
     }
 }
