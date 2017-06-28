@@ -33,25 +33,30 @@
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("节点8");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("节点2", new System.Windows.Forms.TreeNode[] {
             treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("节点12");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("节点3", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("节点0");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("节点12", new System.Windows.Forms.TreeNode[] {
             treeNode4});
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("节点11");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("节点13");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("节点0", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("节点3", new System.Windows.Forms.TreeNode[] {
+            treeNode5});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("节点11");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("节点13");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("节点0", new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode3,
-            treeNode5,
             treeNode6,
-            treeNode7});
+            treeNode7,
+            treeNode8});
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.添加节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.添加兄弟ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.添加儿子ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.contextMenuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -76,24 +81,28 @@
             treeNode2.Text = "节点8";
             treeNode3.Name = "节点2";
             treeNode3.Text = "节点2";
-            treeNode4.Name = "节点12";
-            treeNode4.Text = "节点12";
-            treeNode5.Name = "节点3";
-            treeNode5.Text = "节点3";
-            treeNode6.Name = "节点11";
-            treeNode6.Text = "节点11";
-            treeNode7.Name = "节点13";
-            treeNode7.Text = "节点13";
-            treeNode8.Name = "节点0";
-            treeNode8.Text = "节点0";
+            treeNode4.Name = "节点0";
+            treeNode4.Text = "节点0";
+            treeNode5.Name = "节点12";
+            treeNode5.Text = "节点12";
+            treeNode6.Name = "节点3";
+            treeNode6.Text = "节点3";
+            treeNode7.Name = "节点11";
+            treeNode7.Text = "节点11";
+            treeNode8.Name = "节点13";
+            treeNode8.Text = "节点13";
+            treeNode9.Name = "节点0";
+            treeNode9.Text = "节点0";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode8});
+            treeNode9});
             this.treeView1.Size = new System.Drawing.Size(665, 417);
             this.treeView1.TabIndex = 0;
             this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView1_ItemDrag);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView1_DragDrop);
             this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView1_DragEnter);
+            this.treeView1.DragOver += new System.Windows.Forms.DragEventHandler(this.treeView1_DragOver);
             this.treeView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseClick);
             // 
             // contextMenuStrip1
@@ -126,6 +135,20 @@
             this.删除ToolStripMenuItem.Text = "删除";
             this.删除ToolStripMenuItem.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
             // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.添加儿子ToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(125, 26);
+            // 
+            // 添加儿子ToolStripMenuItem
+            // 
+            this.添加儿子ToolStripMenuItem.Name = "添加儿子ToolStripMenuItem";
+            this.添加儿子ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.添加儿子ToolStripMenuItem.Text = "添加儿子";
+            this.添加儿子ToolStripMenuItem.Click += new System.EventHandler(this.添加儿子ToolStripMenuItem_Click);
+            // 
             // FormTreeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -137,6 +160,7 @@
             this.Load += new System.EventHandler(this.FormTreeView_Load);
             this.groupBox1.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
+            this.contextMenuStrip2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -149,5 +173,7 @@
         private System.Windows.Forms.ToolStripMenuItem 添加节点ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 添加兄弟ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 删除ToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem 添加儿子ToolStripMenuItem;
     }
 }

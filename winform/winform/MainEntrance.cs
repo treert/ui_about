@@ -99,5 +99,17 @@ namespace winform
             var form = new FormTreeView();
             form.ShowDialog();
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            var form = new FormFile();
+            form.ShowDialog();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            var form = new FormDataGridView();
+            form.ShowDialog();
+        }
     }
 }

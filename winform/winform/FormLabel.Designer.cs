@@ -96,6 +96,7 @@
             this.textBox3.Size = new System.Drawing.Size(136, 36);
             this.textBox3.TabIndex = 5;
             this.textBox3.Text = "TextBox\r\nReadOnly = true";
+            this.textBox3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.textBox3_MouseDown);
             // 
             // FormLabel
             // 

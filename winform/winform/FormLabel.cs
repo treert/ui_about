@@ -37,5 +37,31 @@ namespace winform
         {
 
         }
+
+        private void textBox3_MouseDown(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                TextBox txt_box = (TextBox)sender;
+                string txt = txt_box.SelectedText.Trim();
+
+
+                if(txt.Length > 0)
+                {
+                    ContextMenu menu = new ContextMenu();
+                    MenuItem menu_item = new MenuItem("choose: " + txt);
+                    menu_item.Click += new EventHandler((object sender_, EventArgs e_) =>
+                    {
+                        MessageBox.Show("click: " + txt);
+                    });
+                    menu.MenuItems.Add(menu_item);
+                    txt_box.ContextMenu = menu;
+                }
+                else
+                {
+                    txt_box.ContextMenu = null;
+                }
+            }
+        }
     }
 }

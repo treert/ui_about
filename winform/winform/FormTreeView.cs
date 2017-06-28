@@ -105,25 +105,62 @@ namespace winform
 
         private void treeView1_MouseClick(object sender, MouseEventArgs e)
         {
-            if(e.Button == System.Windows.Forms.MouseButtons.Right)
-            {
-                contextMenuStrip1.Show(treeView1, e.Location);
-            }
+            //if(e.Button == System.Windows.Forms.MouseButtons.Right)
+            //{
+            //    contextMenuStrip1.Show(treeView1, e.Location);
+            //}
         }
 
         // 实现拖拽子节点
         // > http://visionsky.blog.51cto.com/733317/361894/
         private void treeView1_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            DoDragDrop(e.Item, DragDropEffects.Move);
+            if(e.Item is TreeNode)
+            {
+                treeView1.DoDragDrop(e.Item, DragDropEffects.Move);
+                //(e.Item as TreeNode).BackColor = Color.LightGreen;
+            }
+            
         }
 
         private void treeView1_DragEnter(object sender, DragEventArgs e)
         {
+            // 和想象的不一样哎
+            //if (e.Data.GetDataPresent(typeof(TreeNode)))
+            //{
+            //    e.Effect = DragDropEffects.Move;
+
+            //    Point pos = new Point(e.X, e.Y);
+            //    pos = treeView1.PointToClient(pos);
+            //    TreeNode dropNode = treeView1.GetNodeAt(pos);
+            //    treeView1.SelectedNode = dropNode;
+            //}
+            //else
+            //    e.Effect = DragDropEffects.None;
+        }
+
+        private void treeView1_DragOver(object sender, DragEventArgs e)
+        {
             if (e.Data.GetDataPresent(typeof(TreeNode)))
+            {
+                TreeNode myNode = e.Data.GetData(typeof(TreeNode)) as TreeNode;
+                myNode.BackColor = Color.LightGreen;
+
                 e.Effect = DragDropEffects.Move;
+                Point pos = new Point(e.X, e.Y);
+                pos = treeView1.PointToClient(pos);
+                TreeNode dropNode = treeView1.GetNodeAt(pos);
+                treeView1.SelectedNode = dropNode;
+                if(dropNode != null)
+                {
+                    dropNode.Expand();
+                }
+            }
             else
+            {
                 e.Effect = DragDropEffects.None;
+            }
+                
         }
 
         private void treeView1_DragDrop(object sender, DragEventArgs e)
@@ -132,6 +169,7 @@ namespace winform
             if(e.Data.GetDataPresent(typeof(TreeNode)))
             {
                 myNode = e.Data.GetData(typeof(TreeNode)) as TreeNode;
+                myNode.BackColor = Color.White;
             }
             else
             {
@@ -144,27 +182,34 @@ namespace winform
             if(dropNode == null)
             {
                 // 没有目标节点，删掉节点
-                if(MessageBox.Show("删掉") == DialogResult.OK)
+                if (MessageBox.Show("删掉", "", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     myNode.Remove();
                 }
 
                 return;
             }
-            if(dropNode == myNode.Parent)
+            if(dropNode == myNode.Parent || dropNode == myNode)
             {
                 return;// 没有变化
             }
 
             Func<TreeNode, TreeNode, bool> is_ancestor = (TreeNode child, TreeNode ancestor) =>
             {
+                int count = 0;
                 while(child.Parent != null)
                 {
+                    count++;
                     if(child.Parent == ancestor)
                     {
                         return true;
                     }
                     child = child.Parent;
+
+                    if(count > 10)
+                    {
+                        MessageBox.Show("dead loop");
+                    }
                 }
                 return false;
             };
@@ -174,12 +219,30 @@ namespace winform
                 return;// 不能复制到儿子身上
             }
 
-            TreeNode tmp = myNode;
             myNode.Remove();
-            dropNode.Nodes.Add(tmp);
-
+            dropNode.Nodes.Add(myNode);
             dropNode.Expand();
-            
+        }
+
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if(e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                if(e.Node.Parent == null)
+                {
+                    e.Node.ContextMenuStrip = contextMenuStrip2;
+                }
+                else
+                {
+                    e.Node.ContextMenuStrip = contextMenuStrip1;
+                }
+                
+            }
+        }
+
+        private void 添加儿子ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddChildNode();
         }
     }
 }
